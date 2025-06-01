@@ -1,3 +1,3 @@
 class main{
-    dnbhbb
+    Iam an entrepreneur
 }
