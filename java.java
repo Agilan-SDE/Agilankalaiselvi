@@ -1,3 +1,8 @@
 class main{
-    dnbhbb
+    public static void main(String[]args){
+        
+    }
+    
+
+    
 }
