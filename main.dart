@@ -1,100 +1,93 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(SecondApp());
+void main(){
+  runApp(MainApp());
 }
 
-
-class SecondApp extends StatefulWidget{
+class MainApp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-
-    return SecondAppState();
-  }
+  State<MainApp> createState() => _MainAppState();
 }
 
-class SecondAppState extends State<SecondApp>{
+class _MainAppState extends State<MainApp> {
+  double size=0;
 
-  List<String> N = [];
-  TextEditingController textController  = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    
+    size=MediaQuery.of(context).size.width/5;
     return MaterialApp(
-      home:Scaffold(
+      home: Scaffold(
+        backgroundColor: Colors.blue,
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text("Todo List App"),
-          centerTitle: false,
+          backgroundColor: Colors.green,
+          title: Text("Calculator",
+          style:TextStyle(
+            color: Colors.white
+          )),
         ),
-        body:Column(
-          children: [
+        body:ListView(children: [
+          Container(
+            alignment: Alignment.bottomRight,
+            child:Text("50",
+          style:TextStyle(fontSize: 60,
+          color:Colors.white)
+          ),
+          ),
+          Column(children:[
             Row(children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child:TextField(
-                    controller: textController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    label:Text("Enter a Task")
-                  ),
-                ),
-                ),
-              ),
+             calc_button("8",Colors.white),
+             calc_button("9",Colors.white),
+             calc_button(".",Colors.white),
+             calc_button("*",Colors.orange)
+            ],),
 
-              MaterialButton(
-                height:50,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child:Text("Add",
-                style:TextStyle(
-                  color: Colors.purple,
-                )),
-                
-                onPressed: (){
-                  setState(() {
-                   N.add(textController.text);
-                   textController.clear();
-                  });
-                })
-              ],
-              ),
+            Row(children: [
+             calc_button("7",Colors.white),
+             calc_button("6",Colors.white),
+             calc_button("5",Colors.white),
+             calc_button("/",Colors.orange)
+            ],),
 
-              Flexible(
-                child: ListView.builder(
-                  itemCount:N.length,
-                  itemBuilder: (context,index){
-                    return  Row(children: [
-                          Expanded(
-                            child: Container(
-                              padding:EdgeInsets.all(10),
-                              child: Text(N[index])),
-                          ),
-                          MaterialButton(
-                            child: Icon(Icons.delete,
-                           color: Colors.red,
-                           ),
-                            onPressed:(){
-                            setState(() {
-                              N.removeAt(index);
-                            });
-                          })
-                        ],
-                        );
-                      
-                }),
-              )
-              
-              
+            Row(children: [
+             calc_button("4",Colors.white),
+             calc_button("3",Colors.white),
+             calc_button("2",Colors.white),
+             calc_button("-",Colors.orange)
+            ],),
+
+            Row(children: [
+             calc_button("1",Colors.white),
+             calc_button("0",Colors.white),
+             calc_button("=",Colors.orange),
+             calc_button("+",Colors.orange)
+            ],),
+          ]),
+          calc_button("clear",Colors.white)
         ],)
-      )
+      ),
+    );
+  }
+
+  Widget calc_button(String number,Color bgcolor){
+    return InkWell(
+      onTap: () {
+        
+      },
+        child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(10),
+                  height:size,
+                  width:size,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: bgcolor,
+                  ),
+                  child: Text(number,
+                  style:TextStyle(
+                    fontSize: 30,
+                    color: Colors.black
+                  )),
+        )
     );
   }
 }
-
-
