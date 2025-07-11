@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MainApp());
+}
+
+class MainApp extends StatefulWidget {
+  MainApp({super.key});
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+double size=0;
+String inputValue="";
+String CalculatedValue="";
+String Operator="";
+
+  @override
+  Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size.width/5;
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body:ListView(
+          children: [
+            Container(
+
+              alignment: Alignment.bottomRight,
+              child:Text(inputValue,
+              style:TextStyle(color:Colors.white,fontSize:100)),
+            ),
+            Column(
+              children: [
+                Row(children: [               
+                 calc_button("7",Colors.white54),
+                 calc_button("8",Colors.white54),
+                 calc_button("9",Colors.white54),
+                 calc_button("/",Colors.orange),
+                ],),
+
+                Row(children: [               
+                 calc_button("4",Colors.white54),
+                 calc_button("5",Colors.white54),
+                 calc_button("6",Colors.white54),
+                 calc_button("*",Colors.orange),
+                ],),
+
+                Row(children: [ 
+                calc_button("1",Colors.white54),
+                calc_button("2",Colors.white54),
+                calc_button("3",Colors.white54),
+                calc_button("-",Colors.orange),
+                ],),
+
+                 Row(children: [ 
+                calc_button("0",Colors.white54),
+                calc_button(".",Colors.white54),
+                calc_button("=",Colors.white54),
+                calc_button("+",Colors.orange),
+                ],),
+                
+
+                
+              ],
+            ),
+
+            calc_button("clear",Colors.black)
+          ],
+        )
+      ),
+    );
+  }
+
+  Widget calc_button(String number,Color bgcolor){
+
+    return InkWell(
+      onTap: () {
+      
+        if(number=="clear"){
+          setState(() {
+            inputValue="";
+          CalculatedValue="";
+          Operator="";
+          });
+        }
+        else if(number=="+" ||number=="-" ||number=="*" ||number=="/"){
+           setState((){
+            CalculatedValue=inputValue;
+            inputValue="";
+            Operator=number;
+       });
+        }
+        else if(number=="="){
+          setState(() {
+            double calc = double.parse(CalculatedValue);
+          double input = double.parse(inputValue);
+            if(Operator=="+"){
+              inputValue=(calc+input).toString();
+            }
+            else if(Operator=="-"){
+              inputValue=(calc-input).toString();
+            }
+             else if(Operator=="*"){
+              inputValue=(calc*input).toString();
+            }
+             else if(Operator=="/"){
+              inputValue=(calc/input).toString();
+            }
+          });
+        }
+        else{
+           setState(() {
+          inputValue=inputValue+number;
+        });
+        }
+      
+      },
+      child: Container(
+                      margin:EdgeInsets.all(10),
+                      height:size,
+                      width:size,
+                      alignment: Alignment.center,
+                      decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: bgcolor,
+                      ),
+                      child:Text(number,
+                      style: TextStyle(color: Colors.white,fontSize: 20)
+                      ,),
+      
+                    ),
+    );
+  }
+}
